@@ -26,7 +26,7 @@
 
         <v-divider></v-divider>
 
-        <v-list>
+        <v-list v-if="this.$session.get('authority').authority!='ROLE_ADMIN'">
           <v-list-item @click="ord()">
             <v-icon>mdi-shopping</v-icon>
             <v-list-item-title style="color: black;">Orders</v-list-item-title>
@@ -35,6 +35,13 @@
           <v-list-item @click="trk()">
             <v-icon>fas fa-tachometer-alt</v-icon>
             <v-list-item-title style="color: black;">Track</v-list-item-title>
+          </v-list-item>
+        </v-list>
+
+        <v-list v-else>
+          <v-list-item >
+            <v-icon>mdi-dashboard</v-icon>
+            <v-list-item-title style="color: black; align-items: center;">Dashboard</v-list-item-title>
           </v-list-item>
         </v-list>
 
@@ -55,14 +62,14 @@
     <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
       <template v-slot:activator="{ on, attrs }">
         <router-link to="/">
-        <v-btn icon title="Profile" dark v-bind="attrs" v-on="on">
-          <v-icon>mdi-account-circle</v-icon>
-        </v-btn>
-      </router-link>
+          <v-btn icon title="Profile" dark v-bind="attrs" v-on="on">
+            <v-icon>mdi-account-circle</v-icon>
+          </v-btn>
+        </router-link>
       </template>
-      
+
     </v-menu>
-</div>
+  </div>
 </template>
 <script>
 export default {

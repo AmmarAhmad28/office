@@ -1,0 +1,10 @@
+{
+    "login": "Login",
+    "message": "Log in to continue.",
+    "oauth2Message": "Sign In by",
+    "registerMessage": "Don't have an account?",
+    "createLabel": "Create",
+    "usernamePlaceHolder": "Username",
+    "passwordPlaceHolder": "Password",
+    "loginBtn": "LOG IN"
+  }

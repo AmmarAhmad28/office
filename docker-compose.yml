@@ -1,0 +1,121 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql2
+    ports:
+      - "333:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: employees_service
+    networks:
+      - QANetwork
+
+
+#   activemq:
+#     image: rmohr/activemq
+#     container_name: activemq
+#     ports:
+#       - "6001:8080"
+#     restart: always
+#     environment:
+#       ACTIVEMQ_TCP: 61616
+#       ACTIVEMQ_UI: 8161
+#     networks:
+#       - emailServicesNetwork
+
+
+#   producer-service:                        #it is just a name, which will be used only in this file.
+#     image: email-producer               #name of the image after dockerfile executes
+#     container_name: producer  #name of the container created from docker image
+#                  #docker file name
+#     ports:
+#       - "8082:8080"                       #docker containter port with your os port
+#     restart: always
+
+# #    depends_on:                           #define dependencies of this app
+# #      - activemq                                #dependency name (which is defined with this name 'db' in this file earlier)
+#     environment:
+#       BROKER_URL: tcp://activemq:61616
+# #      SERVER.PORT: 8080
+#     networks:
+#       - emailServicesNetwork
+
+
+
+#   consumer-service: #it is just a name, which will be used only in this file.
+#     image: email-consumer             #name of the image after dockerfile executes
+#     container_name: consumer  #name of the container created from docker image
+#     #docker file name
+#     ports:
+#       - "8083:8080"                       #docker containter port with your os port
+#     restart: always
+
+# #    depends_on: #define dependencies of this app
+# #      - activemq                                #dependency name (which is defined with this name 'db' in this file earlier)
+#     environment:
+#       BROKER_URL: tcp://activemq:61616
+#       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mailBackup?createDatabaseIfNotExist=true
+#       SPRING_DATASOURCE_USERNAME: root
+#       SPRING_DATASOURCE_PASSWORD: root
+#     networks:
+#       - emailServicesNetwork
+
+
+  employee-service: #it is just a name, which will be used only in this file.
+    image: saadmunir/employee-service:0.4             #name of the image after dockerfile executes
+    container_name: employee-service-0.4  #name of the container created from docker image
+    #docker file name
+    ports:
+      - "8081:8080"                       #docker containter port with your os port
+    restart: always
+
+    #    depends_on: #define dependencies of this app
+    #      - activemq                                #dependency name (which is defined with this name 'db' in this file earlier)
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql2:3306/employees_service?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+#    depends_on:
+#      - mysql
+    networks:
+      - QANetwork
+
+
+  main-service: #it is just a name, which will be used only in this file.
+    image: saadmunir/main-service:0.4             #name of the image after dockerfile executes
+    container_name: main-service-0.4  #name of the container created from docker image
+    #docker file name
+    ports:
+      - "8082:8080"                       #docker containter port with your os port
+    restart: always
+
+    #    depends_on: #define dependencies of this app
+    #      - activemq                                #dependency name (which is defined with this name 'db' in this file earlier)
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql2:3306/main_service?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EMAIL_SERVICE_URL: http://producer:8080
+      URL: http://employee-service-0.4:8081
+#    depends_on:
+#      - mysql
+    networks:
+      - QANetwork
+
+  frontend: #it is just a name, which will be used only in this file.
+    image: saadmunir/main-service-frontend:0.1         #name of the image after dockerfile executes
+    container_name: frontend  #name of the container created from docker image
+    #docker file name
+    ports:
+      - "4000:8080"                       #docker containter port with your os port
+    networks:
+      - QANetwork
+
+networks:
+  QANetwork:
+    external:
+      name: QANetwork
+

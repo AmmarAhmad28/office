@@ -1,0 +1,10 @@
+{
+    "login": "لاگ ان",
+    "message": "جاری رکھنے کے لیے لاگ ان کریں۔",
+    "oauth2Message": "کے ذریعے سائن ان کریں۔",
+    "registerMessage": "اکاؤنٹ نہیں ہے؟",
+    "createLabel": "اکاؤنٹ بناؤ",
+    "usernamePlaceHolder": "صارف نام",
+    "passwordPlaceHolder": "پاس ورڈ",
+    "loginBtn": "لاگ ان کریں"
+  }

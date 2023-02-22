@@ -1,0 +1,10 @@
+{
+    "login": "ログイン",
+    "message": "続行するにはログインしてください。",
+    "oauth2Message": "サインイン",
+    "registerMessage": "アカウントをお持ちでない場合",
+    "createLabel": "作成",
+    "usernamePlaceHolder": "ユーザー名",
+    "passwordPlaceHolder": "パスワード",
+    "loginBtn": "ログインする"
+  }
